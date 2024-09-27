@@ -12,6 +12,3 @@ def create_user(request):
 
 def shop(request):
     return render(request, 'epi_shops/global/shop.html')
-
-def admin(request):
-    return render(request, 'epi_shops/global/admin.html')
