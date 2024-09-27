@@ -18,31 +18,67 @@ class Usuarios(models.Model):
     )
     tipo_usuario = models.CharField(max_length=12, choices=TIPO_USUARIO_CHOICES, default='Cliente')
     senha = models.CharField(max_length=255)
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Usuarios'
 
 
 class Cargos(models.Model):
     cargo = models.CharField(max_length=100)
     descricao = models.TextField()
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Cargos'
 
 class Funcionarios(models.Model):
     admissao = models.DateField()
     cargos = models.ForeignKey(Cargos, on_delete=models.CASCADE, related_name='funcionarios_cargos')
     usuarios = models.ForeignKey(Usuarios, on_delete=models.CASCADE, related_name='funcionarios_usuarios')
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Funcionários'
 
 class Clientes(models.Model):
     usuarios = models.ForeignKey(Usuarios, on_delete=models.CASCADE, related_name='clientes_usuarios')
     razao_social = models.CharField(max_length=100)
     cnpj = models.CharField(max_length=14)
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Clientes'
 
 class Emprestimos(models.Model):
     emprestimo = models.DateField()
     devolucao_prevista = models.DateField()
     devolucao_efetiva = models.DateField()
     clientes = models.ForeignKey(Clientes, on_delete=models.CASCADE, related_name='emprestimos_clientes')
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Emprestimos'
 
 class Categorias(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Categorias'
 
 class Epis(models.Model):
     nome = models.CharField(max_length=100)
@@ -52,6 +88,12 @@ class Epis(models.Model):
     fornecedor = models.CharField(max_length=50)
     disponibilidade = models.CharField(max_length=100)
     categoria = models.ForeignKey(Categorias, on_delete=models.CASCADE, related_name='epis_categorias')
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Epis'
 
 class Carrinhos(models.Model):
     clientes = models.ForeignKey(Clientes, on_delete=models.CASCADE, related_name='carrinhos_clientes')
@@ -59,20 +101,44 @@ class Carrinhos(models.Model):
     quantidade = models.IntegerField()
     tipo = models.CharField(max_length=100)
     status = models.CharField(max_length=100)
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Carrinhos'
 
 class Manutencoes(models.Model):
     epis = models.ForeignKey(Epis, on_delete=models.CASCADE, related_name='manutencoes_epis')
     data_inicio = models.DateField()
     data_fim = models.DateField()
     descricao = models.TextField()
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Manutenções'
 
 class Pagamentos(models.Model):
     valor = models.DecimalField(max_digits=7, decimal_places=2)
     data_compra = models.DateField()
     clientes = models.ForeignKey(Clientes, on_delete=models.CASCADE, related_name='pagamentos_clientes')
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Pagamentos'
 
 class Historico(models.Model):
     data = models.DateField()
     epis = models.ForeignKey(Epis, on_delete=models.CASCADE, related_name='historico_epis')
     clientes = models.ForeignKey(Clientes, on_delete=models.CASCADE, related_name='historico_clientes')
     pagamentos = models.ForeignKey(Pagamentos, on_delete=models.CASCADE, related_name='historico_pagamentos')
+    
+    def __str__(self):
+        pass
+    
+    class Meta:
+        verbose_name_plural = 'Historico'
