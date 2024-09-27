@@ -16,8 +16,8 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from epi_shops import views
+from epi_shops.views import *
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', include('epi_shops.urls')),
 ]

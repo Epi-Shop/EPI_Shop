@@ -15,6 +15,3 @@ def shop(request):
 
 def admin(request):
     return render(request, 'epi_shops/global/admin.html')
-
-def index(request):
-    return render(request, 'epi_shops/partial/index.html')
