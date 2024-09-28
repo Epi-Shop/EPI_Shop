@@ -1,8 +1,17 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #707070;
     margin: 0;
     padding: 0;
+}
+
+.logout-link {
+    color: #ffcc00; /* Escolha a cor que desejar */
+    text-decoration: none; /* Remove o sublinhado, se preferir */
+}
+
+.logout-link:hover {
+    color: white; /* Cor ao passar o mouse */
 }
 
 .navbar {
@@ -43,7 +52,7 @@ nav ul li {
     justify-content: center;
     align-items: center;
     height: 80vh;
-    background-color: #ffffff;
+    background-color: #828282;
     padding: 20px;
 }
 

@@ -1,0 +1,16 @@
+{% extends "epi_shops/partial/base.html" %}
+
+{% block title %}Cargos{% endblock title %}
+
+{% block content %}
+    <main>
+        <div class="container">
+            <h1>Cargos</h1>
+            <ul>
+            {% for cargo in cargos %}
+                <li>{{ cargo.nome }} - {{ cargo.salario }} - {{ cargo.departamento }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </main>
+{% endblock %}
