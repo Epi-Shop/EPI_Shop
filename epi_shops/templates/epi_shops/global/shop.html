@@ -3,5 +3,28 @@
 {% block title %}Shop{% endblock title %}
 
 {% block content %}
-    <p>texto simples</p>
+    <main>
+        <div class="container">
+            {% for item in items %}
+            <div class="item-box">
+                <img src="https://picsum.photos/{{ item.id }}" class="item-image" alt="Imagem do produto">
+                <div class="item-info">
+                    <p>{{ item.name }}</p>
+                    <p>{{ item.description }}</p>
+                    <p>R$ {{ item.price }}</p>
+                </div>
+                <div class="buttons">
+                    <button class="btn">Valor compra</button>
+                    <button class="btn">Valor empréstimo</button>
+                </div>
+                {% if item.owner == user %}
+                <button class="btn-register">Editar</button>
+                {% else %}
+                <button class="btn-register">Registrar Item</button>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </main>
 {% endblock %}
+
