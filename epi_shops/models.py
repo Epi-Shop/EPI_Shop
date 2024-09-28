@@ -22,7 +22,7 @@ class Usuarios(models.Model):
     tipo_usuario = models.CharField(max_length=12, choices=TIPO_USUARIO_CHOICES, default='Cliente')
     senha = models.CharField(max_length=255)
     
-    def _str_(self):
+    def __str__(self):
         return f'{self.usuario}'
     
     class Meta:
@@ -31,20 +31,21 @@ class Usuarios(models.Model):
 
 class Cargos(models.Model):
     cargo = models.CharField(max_length=100)
-    descricao = models.TextField()
-    
-    def _str_(self):
-        return f'{self.cargo}'
+    descricao = models.TextField(max_length=100)
     
     class Meta:
         verbose_name_plural = 'Cargos'
+        ordering = ('cargo', )
 
+    def __str__(self):
+        return self.cargo
+    
 class Funcionarios(models.Model):
     admissao = models.DateField()
     cargos = models.ForeignKey(Cargos, on_delete=models.CASCADE, related_name='funcionarios_cargos')
     usuarios = models.ForeignKey(Usuarios, on_delete=models.CASCADE, related_name='funcionarios_usuarios')
     
-    def _str_(self):
+    def __str__(self):
         return f'{self.usuarios} - {self.cargos}'
     
     class Meta:
@@ -55,7 +56,7 @@ class Clientes(models.Model):
     razao_social = models.CharField(max_length=100)
     cnpj = models.CharField(max_length=14)
     
-    def _str_(self):
+    def __str__(self):
         return f'{self.usuarios} - {self.razao_social}'
     
     class Meta:
@@ -67,7 +68,7 @@ class Emprestimos(models.Model):
     devolucao_efetiva = models.DateField()
     clientes = models.ForeignKey(Clientes, on_delete=models.CASCADE, related_name='emprestimos_clientes')
     
-    def _str_(self):
+    def __str__(self):
         return f'Emprestimo de {self.clientes}'
     
     class Meta:
@@ -77,7 +78,7 @@ class Categorias(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
     
-    def _str_(self):
+    def __str__(self):
         return self.nome
     
     class Meta:
@@ -92,7 +93,7 @@ class Epis(models.Model):
     disponibilidade = models.CharField(max_length=100)
     categoria = models.ForeignKey(Categorias, on_delete=models.CASCADE, related_name='epis_categorias')
     
-    def _str_(self):
+    def __str__(self):
         return self.nome
     
     class Meta:
@@ -105,7 +106,7 @@ class Carrinhos(models.Model):
     tipo = models.CharField(max_length=100)
     status = models.CharField(max_length=100)
     
-    def _str_(self):
+    def __str__(self):
         return f'{self.clientes} - {self.epis}'
     
     class Meta:
@@ -117,7 +118,7 @@ class Manutencoes(models.Model):
     data_fim = models.DateField()
     descricao = models.TextField()
     
-    def _str_(self):
+    def __str__(self):
         return f'Manutencoes de {self.epis}'
     
     class Meta:
@@ -128,7 +129,7 @@ class Pagamentos(models.Model):
     data_compra = models.DateField()
     clientes = models.ForeignKey(Clientes, on_delete=models.CASCADE, related_name='pagamentos_clientes')
     
-    def _str_(self):
+    def __str__(self):
         return f'Pagamento de {self.clientes}'
     
     class Meta:
@@ -140,7 +141,7 @@ class Historico(models.Model):
     clientes = models.ForeignKey(Clientes, on_delete=models.CASCADE, related_name='historico_clientes')
     pagamentos = models.ForeignKey(Pagamentos, on_delete=models.CASCADE, related_name='historico_pagamentos')
     
-    def _str_(self):
+    def __str__(self):
         return f'Histórico de {self.clientes}'
     
     class Meta:
