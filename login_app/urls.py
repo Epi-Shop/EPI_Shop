@@ -10,3 +10,4 @@ urlpatterns = [
         form_class=UserCreationForm,
         success_url=reverse_lazy('login')  # Redireciona para a página de login após o cadastro
     ), name='register'),
+]
