@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Login</title>
+    <link rel="stylesheet" href="{% static 'epi_shops/css/style.css' %}"> <!-- Certifique-se de configurar o static files do Django -->
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">EPI <span>FÁCIL</span></h1>
+            <nav class="user-info">
+                <p>Olá [usuário!]</p>
+                <a href="#">Fazer logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Formulário de Login -->
+    <main class="login-container">
+        <div>
+            <form class="login-form" method="POST">
+                {% csrf_token %}
+                <div class="form-columns">
+                    <!-- Primeira coluna -->
+                    <div class="form-column">
+                        <label for="username">Nome de Usuário:</label>
+                        <input type="text" name="username" id="username" required><br>
+                        
+                        <label for="password">Senha:</label>
+                        <input type="password" name="password" id="password" required><br>
+    
+                        <label for="password_confirm">Confirmar Senha:</label>
+                        <input type="password" name="password_confirm" id="password_confirm" required><br>
+                    </div>
+    
+                    <!-- Segunda coluna -->
+                    <div class="form-column">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" id="email" required><br>
+    
+                        <label for="telefone">Telefone:</label>
+                        <input type="tel" name="telefone" id="telefone" required><br>
+    
+                        <label for="cpf">CPF:</label>
+                        <input type="text" name="cpf" id="cpf" required><br>
+    
+                        <label for="endereco">Endereço:</label>
+                        <input type="text" name="endereco" id="endereco" required><br>
+                    </div>
+                </div>
+    
+                <!-- Botão centralizado abaixo das colunas -->
+                <div class="form-submit">
+                    <input type="submit" value="Criar">
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Definir estilo geral do body */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #b0b0b0;
+        }
+        
+        /* Header */
+        .header {
+            background-color: #343a40;
+            padding: 20px 0;
+        }
+        
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header .logo {
+            color: #ffd700; /* Cor amarela */
+            font-size: 2.5rem;
+        }
+        
+        .header .logo span {
+            color: #fff;
+        }
+        
+        .header .user-info {
+            color: #fff;
+        }
+        
+        .header .user-info a {
+            color: #fff;
+            margin-left: 10px;
+            text-decoration: none;
+        }
+        
+        /* Container do formulário de login */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px); /* Altura da tela menos o header */
+        }
+        
+        /* Estilo do formulário de login */
+        .login-form {
+            background-color: #4e4e4e; /* Fundo do formulário */
+            padding: 30px;
+            border-radius: 5px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .login-form h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #fff;
+            display: inline-block;
+        }
+        
+        .login-form label {
+            color: #fff;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            background-color: #6e6e6e;
+            color: #fff;
+        }
+        
+        .login-form input::placeholder {
+            color: #fff;
+        }
+        
+        .login-btn {
+            background-color: #ffd700;
+            color: #343a40;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .login-btn:hover {
+            background-color: #e6b800;
+        }
+        
+        .forgot-password {
+            display: block;
+            text-align: center;
+            color: #fff;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        /* Container principal do formulário */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* Formulário e alinhamento em colunas */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        /* Organiza as colunas do formulário */
+        .form-columns {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        /* Estilo das colunas */
+        .form-column {
+            display: flex;
+            flex-direction: column;
+            width: 48%; /* Cada coluna ocupa cerca de metade da largura do form */
+        }
+        
+        /* Espaçamento entre labels e inputs */
+        .form-column label, .form-column input {
+            margin-bottom: 10px;
+        }
+        
+        /* Centraliza o botão de envio */
+        .form-submit {
+            text-align: center;
+        }
+        
+        /* Estilo do botão de envio */
+        .form-submit input[type="submit"] {
+            background-color: #343a40;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        
+        .form-submit input[type="submit"]:hover {
+            background-color: #50575e;
+        }
+        
+    </style>
+</body>
+</html>
+
+
