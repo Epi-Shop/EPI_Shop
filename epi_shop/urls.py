@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.urls import path, include
-from epi_shops import views as epi_views
 
 urlpatterns = [
+    # ... outras URLs do projeto
     path('admin/', admin.site.urls),
-    path('', include('epi_shops.urls')),  
+    path('', include('epi_shops.urls')),
+    path('login/', include('login_app.urls')),  # Inclui as URLs da aplicação login_app
 ]
