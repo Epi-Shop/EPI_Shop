@@ -30,10 +30,10 @@
                     <div class="dropdown-content" id="rightDropdownMenu">
                         <ul>
                             {% if user.is_authenticated %}
-                            <li><a href="">Sair</a></li>
+                            <li><a href="{% url 'logout' %}">Sair</a></li>
                         {% else %}
                             <li><a href="{% url 'login' %}">Entrar</a></li>
-                            <li><a href="#">Criar Conta</a></li>
+                            <li><a href="{% url 'register' %}">Criar Conta</a></li>
                         {% endif %}
                         </ul>
                     </div>
