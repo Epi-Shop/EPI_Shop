@@ -8,9 +8,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin  # Para exigir login e
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator
 
 @login_required
 def index(request):
+    
     """
     View para a página inicial, exibindo a lista de EPIs,
     carrinho de compras e valor total.
