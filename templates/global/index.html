@@ -7,27 +7,6 @@
 
 <main>
   <div class="container">
-<<<<<<< HEAD
-    <div class="item-box">
-      <div class="info">
-        <p>Informações do produto.</p>
-      </div>
-      <div class="buttons">
-          {% if user.is_authenticated %}
-            <p>Olá, {{ user.username }}!</p>  <a href="{% url 'logout' %}">Sair</a>
-          {% else %}
-            <a href="{% url 'login' %}">Entrar</a> | <a href="{% url 'register' %}">Registrar</a>
-          {% endif %}
-
-          <button class="btn">Valor compra</button>
-          <button class="btn">Valor empréstimo</button>
-          <button class="btn-register">Registrar Item</button>
-      </div>
-    </div>
-  </div>
-</main>
-
-=======
       <div class="item-box">
           <img src="#" alt="Capacete" class="item-image">
           <div class="item-info">
@@ -41,5 +20,4 @@
       </div>
   </div>
 </main>
->>>>>>> development
 {% endblock content %}
