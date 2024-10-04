@@ -1,0 +1,17 @@
+{% comment %} {% extends 'global/partials/base.html' %}
+{% load static %}
+
+{% block title %}Logout{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <p>Você foi desconectado com sucesso.</p>
+    <a href="{% url 'login' %}" class="btn btn-primary">Entrar novamente</a>
+{% endblock %} {% endcomment %}

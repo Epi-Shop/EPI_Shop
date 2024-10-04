@@ -1,0 +1,19 @@
+{% comment %} {% extends 'global/partials/base.html' %}
+{% load static %}
+
+{% block title %}Excluir EPI{% endblock %}
+
+{% block content %}
+    <h1>Excluir EPI</h1>
+
+    <p>Tem certeza que deseja excluir o EPI "{{ object.nome }}"?</p> {# Exibe o nome do EPI #}
+
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sim, excluir</button> {# Botão estilizado com Bootstrap #}
+    </form>
+
+    <a href="{% url 'epi_list' %}" class="btn btn-secondary">Cancelar</a> {# Botão estilizado com Bootstrap #}
+
+{% endblock %} {% endcomment %}

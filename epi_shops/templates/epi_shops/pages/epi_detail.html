@@ -1,0 +1,27 @@
+{% comment %} {% extends 'global/partials/base.html' %}
+{% load static %}
+
+{% block title %}Detalhes do EPI{% endblock %}
+
+{% block content %}
+    <h1>Detalhes do EPI</h1>
+
+    <p>Nome: {{ epi.nome }}</p>
+    <p>Descrição: {{ epi.descricao }}</p>
+    <p>Quantidade: {{ epi.quantidade }}</p>
+    <p>Valor: {{ epi.valor }}</p>
+    <p>Fornecedor: {{ epi.fornecedor }}</p>
+    <p>Disponibilidade: {{ epi.disponibilidade }}</p>
+    <p>Categoria: {{ epi.categoria }}</p>
+
+    <form method="post" action="{% url 'add_to_cart' epi.pk %}">
+        {% csrf_token %}
+        {{ add_to_cart_form.quantidade }}
+        {{ add_to_cart_form.epi }}
+        <button type="submit">Adicionar ao Carrinho</button>
+    </form>
+
+    <a href="{% url 'epi_list' %}">Voltar para a lista</a> |
+    <a href="{% url 'epi_update' epi.pk %}">Editar</a> |
+    <a href="{% url 'epi_delete' epi.pk %}">Excluir</a>
+{% endblock %} {% endcomment %}
