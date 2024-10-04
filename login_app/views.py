@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from epi_shops.models import Epis, Carrinhos
 
 from .forms import CustomUserCreationForm
 

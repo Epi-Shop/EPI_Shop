@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Epis, Carrinhos
+from epi_shops.models import Epis, Carrinhos
 from .forms import EpiForm, AddToCartForm
 from django.db.models import Q  # Para buscas com filtros
 from django.contrib.auth.mixins import LoginRequiredMixin  # Para exigir login em CBVs
@@ -9,8 +9,41 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
+@login_required
 def index(request):
-    return render(request, 'epi_shops/index.html')
+    """
+    View para a página inicial, exibindo a lista de EPIs,
+    carrinho de compras e valor total.
+    """
+    search_query = request.GET.get('search')
+    if search_query:
+        epis = Epis.objects.filter(
+            Q(nome__icontains=search_query) | Q(descricao__icontains=search_query)
+        )
+    else:
+        epis = Epis.objects.all()
+
+    paginator = Paginator(epis, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Carrinho de compras
+    carrinho_itens = Carrinhos.objects.filter(usuario=request.user)
+    valor_total = sum(item.epi.valor * item.quantidade for item in carrinho_itens)
+
+    # Formulário para adicionar ao carrinho
+    add_to_cart_form = AddToCartForm()
+
+
+    context = {
+        'epis': page_obj,
+        'page_obj': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
+        'carrinho_itens': carrinho_itens,
+        'valor_total': valor_total,
+        'add_to_cart_form': add_to_cart_form, # Formulário para o carrinho
+    }
+    return render(request, 'epi_shops/index.html', context)
 
 class EpiList(LoginRequiredMixin, ListView):
     """
