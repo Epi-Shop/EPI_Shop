@@ -4,23 +4,9 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from epi_shops.models import Epis, Carrinhos
 
-<<<<<<< Updated upstream
-from .forms import CustomUserCreationForm  # Importa o formulário de registro customizado
-from .forms import RegisterForm
-
-def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form = RegisterForm()
-    return render(request, 'register.html', {'form': form})
-=======
 from .forms import CustomUserCreationForm
->>>>>>> Stashed changes
 
 class RegisterView(CreateView): # View para registro
     """
@@ -50,19 +36,11 @@ def login_view(request): # View para login
 
         if user is not None: # Se a autenticação for bem-sucedida
             login(request, user)  # Faz o login do usuário
-<<<<<<< Updated upstream
-            messages.success(request, 'Login realizado com sucesso!')  # Exibe mensagem de sucesso
-            return redirect('index')  # Redireciona para a página 'home' após o login
-        else:  # Se a autenticação falhar
-            messages.error(request, 'Credenciais inválidas.')  # Exibe mensagem de erro
-    return render(request, 'login_app/pages/login.html')  # Renderiza o template de login
-=======
             messages.success(request, 'Login realizado com sucesso!')  # Mensagem
             return redirect('epi_list') # Redireciona para a página principal 'epi_list'
         else: # Se a autenticação falhar
             messages.error(request, 'Credenciais inválidas.')  # Mensagem
     return render(request, 'login_app/pages/login.html') # Renderiza o template para GET
->>>>>>> Stashed changes
 
 
 @login_required # Decorador: requer login para acessar essa view
@@ -70,13 +48,6 @@ def logout_view(request):
     """
     Faz o logout do usuário.
     """
-<<<<<<< Updated upstream
-    logout(request)  # Faz o logout do usuário
-    messages.success(request, 'Logout realizado com sucesso!')  # Exibe mensagem de sucesso
-    return redirect('login')  # Redireciona para a página de login após o logout
-
-=======
     logout(request) # Faz o logout
     messages.success(request, 'Logout realizado com sucesso!') # Mensagem
     return redirect('login') # Redireciona para o login
->>>>>>> Stashed changes

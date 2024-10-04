@@ -1,0 +1,17 @@
+{% extends 'global/partials/base.html' %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+<main class="login-container">
+    <div>
+        <form class="login-form" method="POST">
+            {% csrf_token %}
+            <h2>Login</h2> <br>
+            {{ form.as_p }}
+            <button type="submit" class="login-btn">Login</button> <br>
+            <a href="#" Class="logout-link">Esqueceu a senha?</a>
+        </form>
+    </div>
+</main>
+{% endblock content %}
