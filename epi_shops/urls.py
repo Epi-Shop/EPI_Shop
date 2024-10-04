@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('index/', views.index, name='index'),
     path('', views.EpiList.as_view(), name='epi_list'),
     path('<int:pk>/', views.EpiDetail.as_view(), name='epi_detail'),
     path('create/', views.EpiCreate.as_view(), name='epi_create'),
