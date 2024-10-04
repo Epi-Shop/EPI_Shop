@@ -1,0 +1,74 @@
+<header>
+    <div class="navbar">
+        <!-- Botão do menu no canto esquerdo -->
+        <nav>
+            <ul>
+                <li>
+                    <a href="#" class="logout-link" id="leftUserName">Menu</a>
+                    <div class="dropdown-content" id="leftDropdownMenu">
+                        <ul>
+                            <li><a href="#">Pagina Inicial</a></li>
+                            <li><a href="#">Equipamento</a></li>
+                            <li><a href="{% url 'index' %}">Controle EPI</a></li>
+                            <li><a href="#">Colaborador</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Logo centralizada -->
+        <h1 class="logo-container">
+            <span class="logo">EPI</span><span class="logo2">FÁCIL</span>
+        </h1>
+
+        <!-- Logout e saudação no canto direito -->
+        <nav>
+            <ul>
+                <li>
+                    <a href="#" class="logout-link" id="rightUserName">Login ▼</a>
+                    <div class="dropdown-content" id="rightDropdownMenu">
+                        <ul>
+                            {% if user.is_authenticated %}
+                            <li><a href="{% url 'logout' %}">Sair</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Entrar</a></li>
+                            <li><a href="{% url 'create_user' %}">Criar Conta</a></li>
+                        {% endif %}
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+<script>
+// Manipula o menu suspenso do canto esquerdo
+document.getElementById('leftUserName').addEventListener('click', function(event) {
+    event.preventDefault(); // Impede o link de ser seguido
+    var leftDropdown = document.getElementById('leftDropdownMenu');
+    leftDropdown.style.display = leftDropdown.style.display === 'block' ? 'none' : 'block'; // Alterna a exibição do menu
+});
+
+// Manipula o menu suspenso do canto direito
+document.getElementById('rightUserName').addEventListener('click', function(event) {
+    event.preventDefault(); // Impede o link de ser seguido
+    var rightDropdown = document.getElementById('rightDropdownMenu');
+    rightDropdown.style.display = rightDropdown.style.display === 'block' ? 'none' : 'block'; // Alterna a exibição do menu
+});
+
+// Fecha os menus suspensos se o usuário clicar fora deles
+window.onclick = function(event) {
+    if (!event.target.matches('#leftUserName') && !event.target.matches('#rightUserName')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.style.display === 'block') {
+                openDropdown.style.display = 'none';
+            }
+        }
+    }
+};
+</script>

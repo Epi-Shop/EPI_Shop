@@ -1,0 +1,75 @@
+{% comment %} {% extends 'global/partials/base.html' %}
+{% load static %}
+
+{% block title %}Lista de EPIs{% endblock %}
+
+{% block content %}
+
+    <h1>Lista de EPIs</h1>
+
+    <form method="get">
+        <input type="text" name="search" placeholder="Buscar EPIs">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Valor</th>
+                <th>Fornecedor</th>
+                <th>Disponibilidade</th>
+                <th>Categoria</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for epi in epis %}
+                <tr>
+                    <td>{{ epi.nome }}</td>
+                    <td>{{ epi.descricao }}</td>
+                    <td>{{ epi.quantidade }}</td>
+                    <td>{{ epi.valor }}</td>
+                    <td>{{ epi.fornecedor }}</td>
+                    <td>{{ epi.disponibilidade }}</td>
+                    <td>{{ epi.categoria }}</td>
+                    <td>
+                        <a href="{% url 'epi_detail' epi.pk %}">Detalhar</a> |
+                        <a href="{% url 'epi_update' epi.pk %}">Editar</a> |
+                        <a href="{% url 'epi_delete' epi.pk %}">Excluir</a> |
+                        <form method="post" action="{% url 'add_to_cart' epi.pk %}" style="display: inline;">
+                            {% csrf_token %}
+                            {{ add_to_cart_form.quantidade }}
+                            {{ add_to_cart_form.epi }}
+                            <button type="submit" name="add_to_cart">Adicionar ao Carrinho</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">« primeira</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">próxima</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">» última</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+
+    <a href="{% url 'epi_create' %}">Criar novo EPI</a>
+{% endblock %} {% endcomment %}

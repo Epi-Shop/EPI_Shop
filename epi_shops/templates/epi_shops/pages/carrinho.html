@@ -1,0 +1,53 @@
+{% comment %} {% extends 'global/partials/base.html' %}
+{% load static %}
+
+{% block title %}Carrinho de Compras{% endblock %}
+
+{% block content %}
+
+    <h1>Carrinho de Compras</h1>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantidade</th>
+                <th>Preço unitário</th>
+                <th>Subtotal</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in carrinho_itens %}
+                <tr>
+                    <td>{{ item.epi.nome }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>{{ item.epi.valor }}</td>
+                    <td>{{ item.epi.valor|multiply:item.quantidade }}</td>
+                    <td>
+                        <a href="{% url 'update_cart' item.id %}" class="btn btn-sm btn-secondary">Editar</a>
+                        <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-sm btn-danger">Remover</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3"><strong>Valor Total:</strong></td>
+                <td><strong>{{ valor_total }}</strong></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <a href="{% url 'epi_list' %}" class="btn btn-primary">Continuar comprando</a>
+
+{% endblock %} {% endcomment %}

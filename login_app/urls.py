@@ -5,6 +5,10 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 
 urlpatterns = [
+<<<<<<< HEAD
+=======
+    
+>>>>>>> development
     path('', auth_views.LoginView.as_view(template_name='login_app/pages/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('register/', CreateView.as_view(
