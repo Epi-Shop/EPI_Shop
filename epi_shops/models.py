@@ -37,7 +37,7 @@ class Usuarios(AbstractUser):
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
         
-    def _str_(self):
+    def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
 # Demais Modelos
