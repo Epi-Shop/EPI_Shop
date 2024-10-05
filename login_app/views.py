@@ -4,50 +4,64 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from epi_shops.models import Epis, Carrinhos
+from django.contrib.auth.models import User
+from .forms import CustomUserCreationForm, LoginForm  # Importe o formulário de login também
 
-from .forms import CustomUserCreationForm
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        print("Request POST Data:", request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            #username = form.cleaned_data.get('username')
+            messages.success(request, f'Sua conta foi criada com sucesso! Seja bem-vindo, {username}!')
+            return redirect('login')
+        else:
+            print("Form Errors:", form.errors)
+            messages.error(request, 'Erro ao criar a conta. Verifique os dados e tente novamente.')
+    else:
+        form = CustomUserCreationForm()
 
-class RegisterView(CreateView): # View para registro
-    """
-    View para registrar um novo usuário.
-    """
-    form_class = CustomUserCreationForm # Usa o formulário customizado
-    template_name = 'login_app/pages/register.html' # Template HTML para a view
-    success_url = reverse_lazy('login') # Redireciona para login após registrar
+    return render(request, 'register.html', {'form': form})
+
+# View para registro
+class RegisterView(CreateView):
+    form_class = CustomUserCreationForm  # Formulário customizado
+    template_name = 'login_app/pages/register.html'  # Template HTML
+    success_url = reverse_lazy('login')  # Redireciona para login
 
     def form_valid(self, form):
-        """
-        Exibe mensagem de sucesso ao registrar.
-        """
-        response = super().form_valid(form) # Salva o usuário
-        messages.success(self.request, 'Usuário cadastrado com sucesso!') # Mensagem
-        return response # Retorna a resposta
+        response = super().form_valid(form)
+        messages.success(self.request, 'Usuário cadastrado com sucesso!')
+        return response
 
+# View para login
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)  # Usando o formulário de login
+        if form.is_valid():  # Se o formulário for válido
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']  # Nome correto do campo
+            user = authenticate(request, username=username, password=password)  # Autentica o usuário
 
-def login_view(request): # View para login
-    """
-    Processa o login do usuário.
-    """
-    if request.method == 'POST': # Se o método for POST (submit do form)
-        username = request.POST.get('username') # Pega o nome de usuário do formulário
-        senha = request.POST.get('senha') # Pega a senha do formulário
-        user = authenticate(request, username=username, password=senha) # Autentica o usuário
+            if user is not None:  # Se a autenticação for bem-sucedida
+                login(request, user)
+                messages.success(request, 'Login realizado com sucesso!')
+                return redirect('epi_shops:index')  # Redireciona para a página inicial
+            else:
+                messages.error(request, 'Credenciais inválidas.')
+        else:
+            messages.error(request, 'Erro ao processar o formulário.')
 
-        if user is not None: # Se a autenticação for bem-sucedida
-            login(request, user)  # Faz o login do usuário
-            messages.success(request, 'Login realizado com sucesso!')  # Mensagem
-            return redirect('epi_list') # Redireciona para a página principal 'epi_list'
-        else: # Se a autenticação falhar
-            messages.error(request, 'Credenciais inválidas.')  # Mensagem
-    return render(request, 'login_app/pages/login.html') # Renderiza o template para GET
+    else:
+        form = LoginForm()
 
+    return render(request, 'login_app/pages/login.html', {'form': form})
 
-@login_required # Decorador: requer login para acessar essa view
+@login_required
 def logout_view(request):
-    """
-    Faz o logout do usuário.
-    """
-    logout(request) # Faz o logout
-    messages.success(request, 'Logout realizado com sucesso!') # Mensagem
-    return redirect('login') # Redireciona para o login
+    logout(request)
+    messages.success(request, 'Logout realizado com sucesso!')
+    return redirect('login')
+

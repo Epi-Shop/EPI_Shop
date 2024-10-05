@@ -1,16 +1,25 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from epi_shops.models import Usuarios # Importa de epi_shops
+from django.contrib.auth.models import User
+from epi_shops.models import Usuarios
 
+# Formulário customizado para registro
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
 
-class CustomUserCreationForm(UserCreationForm): # Formulário customizado
     class Meta:
-        model = Usuarios
-        fields = ('cpf', 'telefone', 'endereco', 'email', 'tipo_usuario', 'username', 'password') # Campos do formulário de registro
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
 
-    def save(self, commit=True): # Sobrescreve para criptografar a senha
-        user = super().save(commit=False) # Salva o usuário
-        user.set_password(self.cleaned_data["password"]) # Criptografa a senha
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
         if commit:
-            user.save()  # Salva o usuário no banco de dados
+            user.save()
         return user
+
+# Formulário de login
+class LoginForm(forms.Form):
+    username = forms.CharField(label="Nome de Usuário", max_length=150)
+    password = forms.CharField(label="Senha", widget=forms.PasswordInput)
+    
