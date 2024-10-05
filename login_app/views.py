@@ -37,7 +37,7 @@ def login_view(request):
             if user is not None:  # Se a autenticação for bem-sucedida
                 login(request, user)  # Faz o login do usuário
                 messages.success(request, 'Login realizado com sucesso!')  # Exibe mensagem de sucesso
-                return redirect('epi_shops/')  # Redireciona para a página 'home' após o login
+                return redirect('epi_shops:/')  # Redireciona para a página 'home' após o login
             else:  # Se a autenticação falhar
                 messages.error(request, 'Credenciais inválidas.')  # Exibe mensagem de erro
     return render(request, 'login_app/pages/login.html', {'form': form})  # Renderiza o template de login
