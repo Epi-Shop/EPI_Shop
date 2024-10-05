@@ -48,7 +48,7 @@ def login_view(request):
             if user is not None:  # Se a autenticação for bem-sucedida
                 login(request, user)
                 messages.success(request, 'Login realizado com sucesso!')
-                return redirect('index')  # Redireciona para a página inicial
+                return redirect('epi_shops:index')  # Redireciona para a página inicial
             else:
                 messages.error(request, 'Credenciais inválidas.')
         else:
