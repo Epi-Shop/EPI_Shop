@@ -5,7 +5,7 @@ from epi_shops.models import Usuarios
 
 # Formulário customizado para registro
 class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(required=True, label="Email")
+    email = forms.EmailField(required=True)
 
     class Meta:
         model = User
@@ -13,7 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password"])
+        user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
         return user

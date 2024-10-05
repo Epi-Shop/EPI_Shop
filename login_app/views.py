@@ -4,17 +4,22 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm, LoginForm  # Importe o formulário de login também
-from django.contrib.auth.forms import UserCreationForm
 
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
+        print("Request POST Data:", request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
+            user = form.save()
+            login(request, user)
+            #username = form.cleaned_data.get('username')
             messages.success(request, f'Sua conta foi criada com sucesso! Seja bem-vindo, {username}!')
             return redirect('login')
+        else:
+            print("Form Errors:", form.errors)
+            messages.error(request, 'Erro ao criar a conta. Verifique os dados e tente novamente.')
     else:
         form = CustomUserCreationForm()
 
